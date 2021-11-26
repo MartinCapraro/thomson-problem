@@ -39,7 +39,7 @@ When the program has finished running it will save the candidate minimal energy 
 
 The program is very simple. It generates a random collection of points on an [n-sphere](https://en.wikipedia.org/wiki/Hypersphere), and then runs [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent) on the configuration of the points to lower the total potential energy. That's it. This is much simpler than e.g. calculating the forces between the particles from first principles and then using Newton's laws to update their trajectories until they reach something like a stable state.
 
-Gradient descent is itself interesting - given all the hype around ML/deep learning, I think it is interesting to keep in mind that the 'magic' at the heart of training neural nets is an algorithm that is over 150 years old - according to this paper [this paper](https://www.math.uni-bielefeld.de/documenta/vol-ismp/40_lemarechal-claude.pdf) I found on wikipedia, from a university that probably doesn't exist, Cauchy suggested a version of it in 1847. Of course, these days more sophisticated versions of the algorithm are used, on modern hardware, but the basic insight is old.
+Gradient descent is itself interesting - given all the hype around ML/deep learning, I think it is interesting to keep in mind that the 'magic' at the heart of training neural nets is an algorithm that is over 150 years old - according to [this paper](https://www.math.uni-bielefeld.de/documenta/vol-ismp/40_lemarechal-claude.pdf) I found on wikipedia, from a university that probably doesn't exist, Cauchy suggested a version of it in 1847. Of course, these days more sophisticated versions of the algorithm are used, on modern hardware, but the basic insight is old.
 
 
 ## About the Thomson problem
