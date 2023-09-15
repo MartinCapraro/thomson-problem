@@ -19,7 +19,7 @@ logging.basicConfig(
 
 # Define the parser used to process the command line input and then add a bunch of arguments
 parser = argparse.ArgumentParser(
-            prog='thomson',
+            prog='python thomson_problem.py',
             description='Find approximate solutions to the Thomson problem in arbitrary dimension',
             allow_abbrev=False
         )
@@ -135,7 +135,7 @@ def minimise_energy(w_init, max_iter=1e3, eps=0.01, p=1):
     logging.debug("Starting energy minimisation")
     v = w_init
     e = calculate_total_energy(w_init, p=p)
-    logging.debug("Energy of inital configuration is: {}".format(e))
+    logging.debug("Energy of initial configuration is: {}".format(e))
 
     # iterate over max_energy_iter
     for n in range(int(max_iter)):
@@ -184,6 +184,7 @@ def main():
     max_iter = args.max_iter
 
     run_once(n=n, m=m, p=p, eps=eps, max_iter=max_iter)
+
 
 if __name__ == '__main__':
     main()
