@@ -97,14 +97,6 @@ def calculate_total_energy(array, p=1):
     np.fill_diagonal(mask, 0)
     energy = (1.0/dm[mask]).sum()/2.0
 
-    # This is equivalent to the calculation above, not
-    # sure which is faster or whether it matters
-    # n = len(array[0])
-    # m = len(array)
-    # for i in range(m):
-    #     for j in range(i+1,m):
-    #         energy += 1.0/dm[i, j]
-
     return energy
 
 
