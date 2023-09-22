@@ -11,7 +11,9 @@ If you are only interested in using this, please see the next section. There is 
 ## Getting started
 
 ### Requirements
+
 You will need a working install of Python (preferably Python 3), and basic knowledge of the command line.
+
 
 ### Create a virtual environment
 
@@ -25,7 +27,9 @@ You can skip directly to step 4 if you are ok with installing the necessary pack
 
 4. Install the requirements: `pip install -r requirements.txt`
 
+
 ### Running the program
+
 **Example**: `python thomson_problem.py -n 3 -m 10 -eps 0.1`
 
 Run `python thomson_problem.py -h` to display the following help screen:

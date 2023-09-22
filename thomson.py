@@ -1,4 +1,3 @@
-import sys
 import argparse
 import logging
 
@@ -19,7 +18,7 @@ logging.basicConfig(
 
 # Define the parser used to process the command line input and then add a bunch of arguments
 parser = argparse.ArgumentParser(
-            prog='python thomson_problem.py',
+            prog='python thomson.py',
             description='Find approximate solutions to the Thomson problem in arbitrary dimension',
             allow_abbrev=False
         )
@@ -58,7 +57,7 @@ parser.add_argument(
             type=float,
             required=False,
             default=0.1,
-            help='the gradient descent epsilon - the step size (default: 0.1)'
+            help='the gradient descent epsilon - i.e. the step size (default: 0.1)'
         )
 
 
@@ -89,10 +88,8 @@ def generate_random_vector_of_unit_norm(n):
 
     return x
 
-def calculate_total_energy(array, p=1):
-    n = len(array[0])
-    m = len(array)
 
+def calculate_total_energy(array, p=1):
     energy = 0
     dm = distance_matrix(array, array)
 
@@ -102,6 +99,8 @@ def calculate_total_energy(array, p=1):
 
     # This is equivalent to the calculation above, not
     # sure which is faster or whether it matters
+    # n = len(array[0])
+    # m = len(array)
     # for i in range(m):
     #     for j in range(i+1,m):
     #         energy += 1.0/dm[i, j]
