@@ -105,7 +105,7 @@ def grad_func(array, p=1):
     # by zero in the next operation
     dm = distance_matrix(array, array) + np.eye(len(array))
 
-    grad_mtx = ((array[None, :, :] - array[:, None, :])/dm[:, :, None]).sum(axis=1)
+    grad_mtx = -2.0*p*((array[:, None, :] - array[None, :, :])/dm[:, :, None]**(p+1)).sum(axis=1)
 
     return grad_mtx
 
