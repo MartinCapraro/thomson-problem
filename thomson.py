@@ -101,23 +101,11 @@ def calculate_total_energy(array, p=1):
 
 
 def grad_func(array, p=1):
-    m = len(array)
-    n = len(array[0])
+    # We need to add the unit matrix to the distance matrix to avoid division
+    # by zero in the next operation
+    dm = distance_matrix(array, array) + np.eye(len(array))
 
-    grad_mtx = np.zeros([m, n])
-    dm = distance_matrix(array, array)
-
-    for i in range(m):
-        grad = 0.0
-        # iterate over all points j where i != j
-        for j in range(m):
-            if i == j:
-                pass
-            else:
-                new_vec = (array[i] - array[j])/dm[i, j]**(p+1)
-                grad = grad + new_vec
-
-        grad_mtx[i] = -2.0*p*grad
+    grad_mtx = ((array[None, :, :] - array[:, None, :])/dm[:, :, None]).sum(axis=1)
 
     return grad_mtx
 
@@ -128,7 +116,7 @@ def minimise_energy(w_init, max_iter=1e3, eps=0.01, p=1):
     e = calculate_total_energy(w_init, p=p)
     logging.debug("Energy of initial configuration is: {}".format(e))
 
-    # iterate over max_energy_iter
+    # iterate over max_iter steps
     for n in range(int(max_iter)):
         logging.debug("{}/{}".format(n, int(max_iter)))
         # One step of vanilla gradient descent

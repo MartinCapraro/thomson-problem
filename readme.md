@@ -5,7 +5,7 @@ This is a simple program that finds numerical approximations to the [Thomson pro
 
 If you are only interested in using this, please see the next section. There is a more in depth section further down that outlines how the program works (**spoiler**: gradient descent), and gives some historical context.
 
-**Warning**: The current implementation of gradient descent is very naive (this should be read as 'unsophisticated and slow'), and was built to satisfy my curiosity, not to achieve state of the art results, efficiency, or whatever. I find it fascinating that I can achieve relatively good results (in a sense I will quantify somewhat below) with this naive implementation.
+**Warning**: The current implementation of gradient descent is very naive (~~this should be read as 'unsophisticated and slow'~~ **update:** it is still unsophisticated, but now less slow), and was built to satisfy my curiosity, not to achieve state of the art results, efficiency, or whatever. I find it fascinating that I can achieve relatively good results (in a sense I will quantify somewhat below) with this naive implementation.
 
 
 ## Getting started
@@ -69,7 +69,6 @@ It should be fairly straightforward to build something better from this. If you 
 
 **List of things wrong or missing from the gradient descent implementation:**
 
-1. It's not vectorised
-2. It iterates over all pairs twice
+1. ~~It's not vectorised~~
+2. ~~It iterates over all pairs twice~~
 3. There is no momentum parameter
-
