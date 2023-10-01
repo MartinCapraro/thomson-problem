@@ -2,7 +2,9 @@ import argparse
 import logging
 
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy.spatial import distance_matrix
+
 
 np.set_printoptions(precision=5)
 np.set_printoptions(suppress=True)
@@ -68,6 +70,16 @@ parser.add_argument(
             required=False,
             default=1e3,
             help='the number of steps of gradient descent the program will take (default: 1000)'
+        )
+
+
+parser.add_argument(
+            '--plot',
+            metavar='plot',
+            required=False,
+            default=False,
+            action=argparse.BooleanOptionalAction,
+            help='plot the found solution - only valid when n = 3 (default: false)'
         )
 
 
@@ -145,12 +157,59 @@ def run_once(n, m, p, eps, max_iter):
     configuration = minimise_energy(w_init=w_init, eps=eps, max_iter=max_iter, p=p)
     energy = calculate_total_energy(configuration, p=p)
 
-    np.savetxt('n={}_m={}_p={}.txt'.format(n, m, p), configuration)
+    np.savetxt(output_file_path(n, m, p), configuration, delimiter=",")
 
     logging.info("Minimised energy: {}".format(energy))
 
     logging.debug("Final configuration after energy minimisation:")
     logging.debug(repr(configuration))
+
+
+def plot_points_on_two_sphere(points):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Generate spherical data
+    r = 1
+    theta = np.linspace(0, 2.0*np.pi, 40)
+    phi = np.linspace(0, np.pi, 40)
+
+    # Convert to cartesian coordinates
+    x = r * np.outer(np.cos(theta), np.sin(phi))
+    y = r * np.outer(np.sin(theta), np.sin(phi))
+    z = r * np.outer(np.ones(np.size(theta)), np.cos(phi))
+
+    ax.plot_surface(
+      x,
+      y,
+      z,
+      rstride=1,
+      cstride=1,
+      color='c',
+      alpha=0.3,
+      linewidth=1
+    )
+
+    ax.scatter(
+      points[:, 0],
+      points[:, 1],
+      points[:, 2],
+      color="r",
+      s=35
+    )
+
+    ax.set_xlim([-1, 1])
+    ax.set_ylim([-1, 1])
+    ax.set_zlim([-1, 1])
+    ax.set_aspect("equal")
+    plt.tight_layout()
+    plt.axis('off')
+    plt.show()
+
+
+def output_file_path(n, m, p):
+    # TODO: return absolute instead of relative path
+    return f"./output/n={n}_m={m}_p={p}.csv"
 
 
 def main():
@@ -161,11 +220,16 @@ def main():
     p = args.p
     eps = args.eps
     max_iter = args.max_iter
+    plot = args.plot
 
     run_once(n=n, m=m, p=p, eps=eps, max_iter=max_iter)
+
+    if plot is True and n == 3:
+        points = np.genfromtxt(output_file_path(n, m, p),  delimiter=',')
+        plot_points_on_two_sphere(points)
+    elif plot and n != 3:
+        logging.error("Can only plot solutions for n=3 (i.e. the 2-sphere)")
 
 
 if __name__ == '__main__':
     main()
-
-# TODO: add a boolean flag to write the position of the particles to a file
