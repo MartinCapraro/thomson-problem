@@ -3,7 +3,6 @@ import logging
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.spatial import distance_matrix
 
 
 np.set_printoptions(precision=5)
@@ -103,7 +102,10 @@ def generate_random_vector_of_unit_norm(n):
 
 def calculate_total_energy(array, p=1):
     energy = 0
-    dm = distance_matrix(array, array)
+
+    # Compute the pairwise differences
+    diff = array[:, None, :] - array[None, :, :]
+    dm = np.sum(diff**2, axis=-1)**0.5
 
     mask = np.ones(dm.shape, dtype=bool)
     np.fill_diagonal(mask, 0)
@@ -113,11 +115,18 @@ def calculate_total_energy(array, p=1):
 
 
 def grad_func(array, p=1):
-    # We need to add the unit matrix to the distance matrix to avoid division
-    # by zero in the next operation
-    dm = distance_matrix(array, array) + np.eye(len(array))
+    # Compute the pairwise differences
+    diff = array[:, None, :] - array[None, :, :]
 
-    grad_mtx = -2.0*p*((array[:, None, :] - array[None, :, :])/dm[:, :, None]**(p+1)).sum(axis=1)
+    # Compute the square of the distance matrix and add the unit matrix to
+    # avoid division by zero when calculating the inverse distances
+    dms = np.sum(diff**2, axis=-1) + np.eye(len(array))
+
+    # Inverse of the distance matrix squared
+    inv_distances = dms**(-(p + 1) / 2)
+
+    # Matrix of gradients
+    grad_mtx = -2.0 * p * np.sum(diff * inv_distances[..., None], axis=1)
 
     return grad_mtx
 
