@@ -203,13 +203,11 @@ def plot_points_on_two_sphere(points):
       points[:, 0],
       points[:, 1],
       points[:, 2],
-      color="r",
-      s=35
+      color="r"
     )
 
-    ax.set_xlim([-1, 1])
-    ax.set_ylim([-1, 1])
-    ax.set_zlim([-1, 1])
+    ax.set_xlim(left=-1, right=1)
+    ax.set_ylim(bottom=-1, top=1)
     ax.set_aspect("equal")
     plt.tight_layout()
     plt.axis('off')
