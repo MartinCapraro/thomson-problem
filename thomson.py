@@ -114,7 +114,8 @@ def calculate_total_energy(array, p=1):
     return energy
 
 
-def grad_func(array, p=1):
+# I'm leaving this here as a reminder of how I used to calculate this
+def grad_func_old(array, p=1):
     # Compute the pairwise differences
     diff = array[:, None, :] - array[None, :, :]
 
@@ -127,6 +128,26 @@ def grad_func(array, p=1):
 
     # Matrix of gradients
     grad_mtx = -2.0 * p * np.sum(diff * inv_distances[..., None], axis=1)
+
+    return grad_mtx
+
+
+def grad_func(array, p=1):
+    # Compute pairwise squared differences
+    sq_diff = np.sum(array[:, None, :]**2, axis=-1) + np.sum(array[None, :, :]**2, axis=-1) - 2.0 * np.dot(array, array.T)
+
+    # Add the unit matrix to avoid division by zero when calculating the
+    # inverse distance
+    sq_diff = sq_diff + np.eye(len(array))
+
+    # Inverse of the distance matrix squared
+    inv_distances = sq_diff**(-(p + 1) / 2)
+
+    # Pairwise differences
+    diff = array[:, None, :] - array[None, :, :]
+
+    # Matrix of gradients
+    grad_mtx = -2.0 * p * np.einsum('ijk,ij->ik', diff, inv_distances)
 
     return grad_mtx
 
