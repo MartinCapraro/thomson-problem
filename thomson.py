@@ -109,7 +109,9 @@ def calculate_total_energy(array, p=1):
 
     mask = np.ones(dm.shape, dtype=bool)
     np.fill_diagonal(mask, 0)
-    energy = (1.0/dm[mask]).sum()/2.0
+
+    # The energy for the potential V(r) = r**(-p) is sum (dm[mask]^-p) / 2.0
+    energy = (dm[mask]**(-p)).sum()/2.0
 
     return energy
 
