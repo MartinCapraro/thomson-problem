@@ -12,31 +12,18 @@ If you are only interested in using this, please see the next section. There is 
 
 ### Requirements
 
-You will need a working install of Python (preferably Python 3), and basic knowledge of the command line.
-
-
-### Create a virtual environment
-
-You can skip directly to step 4 if you are ok with installing the necessary packages globally on your computer.
-
-1. If you don't have it, install [`virtualenv`](https://pypi.org/project/virtualenv/) with `pip install virtualenv`
-
-2. Create a new virtual environment with e.g. `virtualenv thomson-problem-venv`
-
-3. Activate it with `source thomson-problem-venv/bin/activate`
-
-4. Install the requirements: `pip install -r requirements.txt`
+You will need a working install of Python (preferably Python 3), an installation of [`uv`](https://github.com/astral-sh/uv) and basic knowledge of the command line.
 
 
 ### Running the program
 
-**Example**: `python thomson_problem.py -n 3 -m 10 -eps 0.1`
+**Example**: `uv run thomson.py -n 3 -m 10 -eps 0.1`
 
-Run `python thomson_problem.py -h` to display the following help screen:
+Run `uv run thomson.py -h` to display the following help screen:
 
 ![usage_screen](./usage_screen.png)
 
-When the program has finished running it will save the candidate minimal energy configuration to file - you can load it for later use with `np.loadtxt(file_name)`. If the program is taking too long to finish, play around with the step size and number of iterations. It it's still taking too long, you need a better script, computer, or both.
+When the program has finished running it will save the candidate minimal energy configuration to disk as a csv file in the `output` directory - you can load it for later use with `np.loadtxt(file_name)`. If the program is taking too long to finish, play around with the step size and number of iterations. It it's still taking too long, you need a better script, computer, or both.
 
 If `n=3` you can also pass `--plot` to the script to view a plot of the solution on the 2-sphere. See below for an example when `m=12`.
 
