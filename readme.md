@@ -32,7 +32,7 @@ If `n=3` you can also pass `--plot` to the script to view a plot of the solution
 
 ## Outline of algorithm
 
-The program is very simple. It generates a random collection of points on an [n-sphere](https://en.wikipedia.org/wiki/Hypersphere), and then runs [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent) on the configuration of the points to lower the total potential energy. That's it. This is much simpler than e.g. calculating the forces between the particles from first principles and then using Newton's laws to update their trajectories until they reach something like a stable state.
+The program is very simple. It generates a random collection of points on an [n-sphere](https://en.wikipedia.org/wiki/Hypersphere), and then runs [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent), with the [Barzilai–Borwein method](https://en.wikipedia.org/wiki/Barzilai%E2%80%93Borwein_method) for adaptive step-size, on the configuration of the points to lower the total potential energy. That's it. This is much simpler than e.g. calculating the forces between the particles from first principles and then using Newton's laws to update their trajectories until they reach something like a stable state.
 
 Gradient descent is itself interesting - given all the hype around ML/deep learning, I think it is interesting to keep in mind that the 'magic' at the heart of training neural nets is an algorithm that is over 150 years old - according to [this paper](https://www.math.uni-bielefeld.de/documenta/vol-ismp/40_lemarechal-claude.pdf) I found on wikipedia, from a university that probably [doesn't exist](https://en.wikipedia.org/wiki/Bielefeld_conspiracy), [Cauchy](https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy) suggested a version of it in 1847. Of course, these days [more sophisticated](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam) versions of the algorithm are used, on modern hardware, but the basic insight is old.
 
@@ -54,12 +54,5 @@ The problem also has interesting relations to [spherical codes](https://en.wikip
 Physically, the inverse square laws of e.g. electrostatics and gravity can be attributed to the density of flux lines (see the Feynman Lectures or [this explanation on physics Stack Exchange](https://physics.stackexchange.com/questions/176811/inverse-square-law-and-extra-space-dimensions)). In higher dimensions we would expect this to lead to a different potential energy function that we would have to minimise. This program allows for something like this by letting you choose p, the inverse power of the radial dependence of the force.
 
 
-## Ways the current script can be improved
 
-It should be fairly straightforward to build something better from this. If you think something is wrong, or want to improve the code, please create an issue or pull request :D. Here is a list to get you started.
 
-**List of things wrong or missing from the gradient descent implementation:**
-
-1. ~~It's not vectorised~~
-2. ~~It iterates over all pairs twice~~
-3. There is no momentum parameter

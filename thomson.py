@@ -200,6 +200,7 @@ def minimise_energy(w_init, max_iter=1e3, eps=0.01, p=1):
         g = grad_func(v, p=p)
 
         eps = barzilai_borwein(v, v_prev, g, g_prev, eps)
+        print(f"eps: {eps}")
         logging.debug(f"Eps: {eps}")
 
         energy = calculate_total_energy(v, p=p)
