@@ -21,13 +21,13 @@ You will need a working install of Python (preferably Python 3), an installation
 
 Run `uv run thomson.py -h` to display the following help screen:
 
-![usage_screen](./usage_screen.png)
+![usage_screen](./images/usage_screen.png)
 
 When the program has finished running it will save the candidate minimal energy configuration to disk as a csv file in the `output` directory - you can load it for later use with `np.loadtxt(file_name)`. If the program is taking too long to finish, play around with the step size and number of iterations. It it's still taking too long, you need a better script, computer, or both.
 
 If `n=3` you can also pass `--plot` to the script to view a plot of the solution on the 2-sphere. See below for an example when `m=12`.
 
-![usage_screen](./example_plot.png)
+![usage_screen](./images/example_plot.png)
 
 
 ## Outline of algorithm
